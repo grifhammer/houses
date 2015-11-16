@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app='myApp'>
+<html ng-app='houseList'>
 <head>
     <title>Dive Log (HTML)</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -7,11 +7,20 @@
     <script type="text/javascript" src="houses.js"></script>
     <script type="text/javascript" src='controller.js'></script>
 </head>
-<body ng-controller='myController'>
-    <div class="container-fluid">
+<body>
+    <div class="container-fluid" ng-controller="housesListCtrl">
         <h1>My Houses List (in HTML)</h1>
         <div class="row">
-            <div class="col-sm-4" ng-repeat='house in houses'>
+            <div class="col-sm-5">
+                <button class="btn btn-primary btn-lg" ng-click="addHouse()" ng-disabled="!enableAdd()">Add New House</button>
+                <button class="btn btn-danger btn-lg" ng-click="clearHouses()">Clear All Houses</button>
+            </div>
+            <div class="col-sm-offset-3 col-sm-4">
+                <input type="text" class="form-control input-lg" ng-model="searchHouses" placeholder="Search">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4" ng-repeat='house in houses | filter:searchHouses'>
                 <h3>{{house.nickName}}</h3>
                 <p><img src="{{house.imgSrc}}" width="{{house.imgWidth}}"></p>
                 <h4>{{house.address}},<br />{{house.city}}, {{house.state}}</h4>
