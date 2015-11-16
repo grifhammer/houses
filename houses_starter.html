@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+<head>
+    <title>Dive Log (HTML)</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script type="text/javascript" src="houses.js"></script>
+    <script type="text/javascript" src='controller.js'></script>
+</head>
+<body ng-controller='myController'>
+    <div class="container-fluid">
+        <h1>My Houses List (in HTML)</h1>
+        <div class="row">
+            <div class="col-sm-4" ng-repeat='house in houses'>
+                <h3>{{house.nickName}}</h3>
+                <p><img src="{{house.imgSrc}}" width="{{house.imgWidth}}"></p>
+                <h4>{{house.address}},<br />{{house.city}}, {{house.state}}</h4>
+                <h4>{{house.forSale}}</h4>
+                <h4>${{house.salePrice}}</h4>
+                <h4>Zestimate&reg: {{house.estimatedPrice}}</h4>
+                <h4>Discount: ${{house.discount}}%</h4>
+                <h4>Estimated Mortgage: {{house.estimatedMortgage}}</h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
