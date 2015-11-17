@@ -4,9 +4,10 @@ myApp.controller('editController', editController);
 // myApp.controller('deleteCtrl', deleteCtrl);
 // myApp.controller('addCtrl', addCtrl);
 
+
 myApp.config(function($routeProvider, $locationProvider){
 
-	$locationProvider.html5Mode(true);
+	// $locationProvider.html5Mode(true);
 
 
 	$routeProvider.when('/',{
@@ -17,7 +18,7 @@ myApp.config(function($routeProvider, $locationProvider){
 		templateUrl: "list.html",
 		controller: 'housesListCtrl'
 	}).
-	when('/delete', {
+	when('/delete/:houseIndex', {
 		templateUrl: 'delete.html',
 		controller: 'editController'
 	}).
@@ -25,7 +26,7 @@ myApp.config(function($routeProvider, $locationProvider){
 		templateUrl: 'add.html',
 		controller: 'editController'
 	}).
-	when('/edit', {
+	when('/edit/:houseIndex', {
 		templateUrl: 'edit.html',
 		controller: 'editController'
 	}).
@@ -53,14 +54,17 @@ function housesListCtrl($scope, $location){
 	}
 }
 
-function editController($scope, $location){
+function editController($scope, $location, $routeParams){
 	$scope.houses = houses;
 	$scope.view = 'list'
-	var viewIndex = -1;
+	$scope.thisHouse = $scope.houses[$routeParams.houseIndex]
 
-	$scope.changeView = function(view){
-		console.log($location);
+	$scope.changeView = function(view, index){
+		if(index != undefined){
+			view += '/' + index
+		}
 		$location.path(view);
+
 	}
 
 
@@ -81,29 +85,27 @@ function editController($scope, $location){
 	}
 
 	$scope.deleteHouse = function(index){
-		$scope.changeView('delete')
-		viewIndex = index
+		$scope.changeView('delete', index)
 		$scope.thisHouse = $scope.houses[index];
-
 	}
 
-	$scope.confirmDelete = function(){
-		$scope.changeView('list');
-		
-		$scope.houses.splice(viewIndex, 1);
-		
-	}
 
 	$scope.editHouse = function(index){
-		$scope.changeView('edit');
-		$scope.nickName = $scope.houses[index].nickName
-		viewIndex = index;
+		$scope.changeView('edit', index);
+		$scope.nickName = $scope.houses[index].nickName;
+		
+	}
+	$scope.confirmDelete = function(){
+		$scope.changeView('list', $location);
+		
+		$scope.houses.splice($routeParams.houseIndex, 1);
+	}
+	$scope.confirmEdit = function(){
+		$scope.houses[$routeParams.houseIndex].nickName = $scope.nickName
+		$scope.nickName = ''
+		$scope.changeView('list', $location)
 	}
 	
-	$scope.confirmEdit = function(){
-		$scope.houses[viewIndex].nickName = $scope.nickName
-		$scope.nickName = ''
-		$scope.changeView('list')
-	}
 }
+
 
