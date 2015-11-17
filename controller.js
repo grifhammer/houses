@@ -7,27 +7,27 @@ myApp.controller('editController', editController);
 
 myApp.config(function($routeProvider, $locationProvider){
 
-	// $locationProvider.html5Mode(true);
+	$locationProvider.html5Mode(true);
 
 
 	$routeProvider.when('/',{
-		templateUrl: 'list.html',
+		templateUrl: 'pages/list.html',
 		controller: 'housesListCtrl'
 	}).
 	when('/list',{
-		templateUrl: "list.html",
+		templateUrl: "pages/list.html",
 		controller: 'housesListCtrl'
 	}).
 	when('/delete/:houseIndex', {
-		templateUrl: 'delete.html',
+		templateUrl: 'pages/delete.html',
 		controller: 'editController'
 	}).
 	when('/add',{
-		templateUrl: 'add.html',
+		templateUrl: 'pages/add.html',
 		controller: 'editController'
 	}).
 	when('/edit/:houseIndex', {
-		templateUrl: 'edit.html',
+		templateUrl: 'pages/edit.html',
 		controller: 'editController'
 	}).
 	otherwise({
@@ -66,7 +66,6 @@ function editController($scope, $location, $routeParams){
 		$location.path(view);
 
 	}
-
 
 	$scope.addNewHouse = function(){
 		$scope.houses.push(new House($scope.nickName, $scope.imgSrc, $scope.address, $scope.city, $scope.state, $scope.zipCode, $scope.forSale, $scope.salePrice, $scope.estimatedPrice, $scope.estimatedMortgage, $scope.imgWidth, $scope.discount) )
