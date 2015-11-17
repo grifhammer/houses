@@ -1,0 +1,10 @@
+<div>
+	<button class="btn btn-primary btn-xl" ng-click="changeView('add')">Add New House</button>
+	<div class="item" ng-repeat="house in houses" ng-class-odd="'odd'" ng-class-even="'even'">
+		<span class="col-md-4">{{$index+1}}: {{house.nickName}}</span>
+		<div class="col-md-4 col-md-offset-4">
+			<button class="btn btn-warning btn-lg" ng-click="editHouse($index)">Edit</button>
+			<button class="btn btn-danger btn-lg" ng-click="deleteHouse($index)">Delete</button>
+		</div>
+	</div>
+</div>

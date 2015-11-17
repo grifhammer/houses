@@ -1,10 +1,45 @@
-var myApp = angular.module('houseList', []);
+var myApp = angular.module('houseList', ['ngRoute']);
 myApp.controller('housesListCtrl', housesListCtrl);
 myApp.controller('editController', editController);
+// myApp.controller('deleteCtrl', deleteCtrl);
+// myApp.controller('addCtrl', addCtrl);
+
+myApp.config(function($routeProvider, $locationProvider){
+
+	$locationProvider.html5Mode(true);
+
+
+	$routeProvider.when('/',{
+		templateUrl: 'list.html',
+		controller: 'housesListCtrl'
+	}).
+	when('/list',{
+		templateUrl: "list.html",
+		controller: 'housesListCtrl'
+	}).
+	when('/delete', {
+		templateUrl: 'delete.html',
+		controller: 'editController'
+	}).
+	when('/add',{
+		templateUrl: 'add.html',
+		controller: 'editController'
+	}).
+	when('/edit', {
+		templateUrl: 'edit.html',
+		controller: 'editController'
+	}).
+	otherwise({
+		redirectTo: '/'
+	});
+
 	
-function housesListCtrl($scope){
+});
+
+
+function housesListCtrl($scope, $location){
 	var numDisplayedHouses = 0;
-	$scope.houses = [];
+	$scope.houses = houses;
 	$scope.addHouse = function(){
 		$scope.houses = houses.slice(0,++numDisplayedHouses);
 	}
@@ -18,13 +53,14 @@ function housesListCtrl($scope){
 	}
 }
 
-function editController($scope){
+function editController($scope, $location){
 	$scope.houses = houses;
 	$scope.view = 'list'
 	var viewIndex = -1;
 
 	$scope.changeView = function(view){
-		$scope.view = view;
+		console.log($location);
+		$location.path(view);
 	}
 
 
@@ -70,3 +106,4 @@ function editController($scope){
 		$scope.changeView('list')
 	}
 }
+
